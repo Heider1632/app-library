@@ -4,10 +4,18 @@
   require_once('conexion.php');
   require_once('encrypt.php');
 
+  date_default_timezone_set('America/Bogota');
+
   class Usuario 
   {
 
+    private $registro;
+
+    private $libros;
+
     private $libro;
+
+    private $count;
 
     public function Login($clave){
 
@@ -31,7 +39,11 @@
           echo 'index.php';
         }
 
+      }else{
+        echo 'error_3';
       }
+
+      $db->close();
     }
 
     public function RegistrarLibro($nombre, $codigobarra, $precio, $cantidad, $categoria)
@@ -60,28 +72,6 @@
     }
 
 
-    public function RegistrarCliente($nombre, $identificacion, $telefono){
-      # Nos conectamos a la base de datos
-      $db = new Conexion();
-
-      $consulta = $db->query("SELECT id FROM cliente WHERE identificacion = '$identificacion'");
-
-      $verificar_cliente = parent::verificarRegistros($consulta);
-
-      if($verificar_cliente > 0){
-
-        echo "el cliente ya existe";
-
-      }else{
-
-        $db->query("INSERT INTO cliente(nombre, identificacion, telefono) VALUES ('$nombre', '$identificacion', '$telefono')");
-
-        echo "cliente registrado";
-      }
-
-      $db->close();
-    } 
-
     function buscarLibro($codigobarra, $libro){
 
     # Nos conectamos a la base de datos
@@ -95,35 +85,95 @@
       if($verificar_libro > 0){
 
         $sql = $db->query("SELECT libros.id, nombre, precio, categorias.genero FROM libros INNER JOIN categorias ON libros.idcategoria = categorias.id WHERE libros.codigobarra = '$codigobarra' GROUP by libros.nombre");
-        while($registro = $db->consultaArreglo($sql)){
 
-        $libro[] = array(
+        while($registro = $db->consultaArreglo($sql)){ 
+
+          $libro = array(
 
             'id' => $registro['id'],
             'nombre' => $registro['nombre'],
             'precio' => $registro['precio'],
             'genero' => $registro['genero']
-        );
 
-          }
+          );
+        }
 
         return $libro;
-
-      }else{
-
-      echo 'error_3';
 
       }
 
       $db->close();
       }
 
-    public function transaccion($libro, $nombre, $identificacion, $telefono){
+      public function transaccion($nombre, $identificacion, $telefono, $total){
 
+        $db = new Conexion();
 
-    }
+        $cantidad = $db->query("SELECT cantidad FROM libros");
 
-    public function verInventario(){
+        if(empty($nombre) && empty($identificacion) && empty($telefono)){
+
+        print "<script>
+              alert('campos vacios');
+              window.location='../seem/home.php';
+              </script>";
+
+        }else {
+
+          if (empty($nombre)) {
+
+            $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("N.N", "'. $identificacion.'", "'.$telefono.'")');
+
+          } elseif(empty($identificacion)){
+
+            $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "**********", "'.$telefono.'")');
+
+          } elseif(empty($telefono)){
+
+            $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "'.$identificacion.'", "##########")');
+
+          }else{
+
+          $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "'. $identificacion.'", "'.$telefono.'")');
+
+          }
+
+          if (isset($_SESSION['carrito'])) {
+
+            $hora = date("Y-m-d H:i:s");
+
+            foreach ($_SESSION['carrito'] as $c) {
+
+            $consulta = $db->query('SELECT id FROM cliente where nombre = "'.$nombre.'"');
+
+            $id = $db->consultaArreglo($consulta);
+
+            $db->query('INSERT INTO transaccion (id_cliente, id_libro, cant, total, fecha) VALUES ("'.$id['id'].'", "'.$c['libro_id'].'", "'.$c['cantidad'].'", "'.$total.'", "'. $hora .'")');
+
+            $sql = $db->query('SELECT id FROM transaccion WHERE id_cliente = "'.$id['id'].'" and id_libro =  "'.$c['libro_id'].'" and fecha="'.$hora.'"');
+
+            $id_transaccion = $db->consultaArreglo($sql);
+
+            $db->query('UPDATE libros, 
+             (SELECT libros.id, SUM(libros.cantidad - transaccion.cant) AS cantidad 
+              FROM libros INNER JOIN transaccion ON libros.id = transaccion.id_libro WHERE transaccion.id = "'.$id_transaccion['id'].'") AS a 
+              SET libros.cantidad = a.cantidad 
+              WHERE libros.id = "'.$c['libro_id'].'"');
+            }
+
+            #Mando un numero de respuesta para saber que se conecto correctamente.
+            echo 1;
+            }else {
+
+            echo 'error desde el usuario';
+
+            }
+        }
+
+        $db->close();
+      }
+
+      public function verInventario(){
        # Nos conectamos a la base de datos
         $db = new Conexion();
 
@@ -138,33 +188,75 @@
             'cantidad' => $registro['cantidad'],
             'genero' => $registro['genero']
         );
-          }
+      }
 
         return $libro;
 
-    }
+        $db->close();
 
-    public function verRegCompra(){
+      }
+
+      public function verRegCompra(){
       # Nos conectamos a la base de datos
       $db = new Conexion();
 
-       $sql = $db->query("");
+       $sql = $db->query("SELECT cliente.id, cliente.nombre, cliente.telefono, SUM(cant), total, fecha FROM transaccion INNER JOIN cliente ON cliente.id = transaccion.id_cliente GROUP BY cliente.id");
+
         while($registro = $db->consultaArreglo($sql)){
 
         $transaccion[] = array(
 
             'id' => $registro['id'],
             'nombre' => $registro['nombre'],
-            'telefono' => $registro['telefono'],
-            'libros' => $registro['libros'],
+            'cantidad' => $registro[3],
             'total' => $registro['total'],
-            'genero' => $registro['fecha']
+            'telefono' => $registro['telefono'],
+            'fecha' => $registro['fecha']
         );
-          }
+
+        }
 
         return $transaccion;
 
+        $db->close();
     }
+
+    public function editLibro($id, $codigobarra, $nombre, $cantidad, $precio){
+
+      $db = new Conexion();
+
+      $db->query('UPDATE libros SET codigobarra = "'.$codigobarra.'", nombre = "'.$nombre.'", cantidad = "'.$cantidad.'", precio = "'.$precio.'" WHERE id = "'.$id.'"');
+
+      $db->close();
+
+      print "<script>window.location='../controller/verInventario.php';</script>";
+    }
+
+    public function buscarLibroRegistro($buscar){
+
+      $db = new Conexion();
+
+      $sql = $db->query('SELECT libros.id, nombre, precio, cantidad, categorias.genero 
+                          FROM libros 
+                          INNER JOIN categorias ON libros.idcategoria = categorias.id 
+                          WHERE codigobarra = "'.$buscar.'" or nombre = "'.$buscar.'"');
+        while($registro = $db->consultaArreglo($sql)){
+
+        $libro[] = array(
+
+            'id' => $registro['id'],
+            'nombre' => $registro['nombre'],
+            'precio' => $registro['precio'],
+            'cantidad' => $registro['cantidad'],
+            'genero' => $registro['genero']
+        );
+      }
+
+       return $libro;
+
+      $db->close();
+    }
+
   }
 
 ?>
