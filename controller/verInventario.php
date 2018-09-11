@@ -5,10 +5,16 @@
     # Creamos un objeto de la clase usuario
     $usuario = new Usuario();
 
-	$registro = $usuario->verRegCompra();
+	$registro = $usuario->verInventario();
 
-	require_once('../seem/registro_compra.php');
+	if ($_POST) {
 
+		$buscar = $_POST['buscar'];
 
+		$registro = $usuario->buscarLibroRegistro($buscar);
+
+	}
+
+	require_once('../seem/inventario.php');
 
 ?>

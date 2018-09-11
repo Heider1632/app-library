@@ -1,23 +1,27 @@
 <?php
-    # Leemos las variables enviadas mediante Ajax
-    $codigobarra = $_POST['codigobarra'];
-    $libro = null;
-    $x = 20;
 
-    for ($i=0; $i < $x; $i++) { 
-         # Incluimos la clase usuario
-        require_once('../model/usuario.php');
+session_start();
 
-        # Creamos un objeto de la clase usuario
-        $usuario = new Usuario();
+$nombre = $_POST['nombre'];
+$identificacion = $_POST['identificacion'];
+$telefono = $_POST['telefono'];
+$total = $_POST['total'];
+$descuento = $_POST['descuento'];
+$pago_comprador = $_POST['pago_comprador'];
+$cambio = $_POST['cambio'];
 
-        # Llamamos al metodo libro para validar los datos en la base de datos
-        $usuario -> buscarLibro($codigobarra, $libro);
-        
-        $registro = ($usuario->buscarLibro($codigobarra, $libro));
+if ($pago_comprador < $total) {
+	
+	echo 'error desde el controlador';
+	
+}else{
 
-        require_once("../seem/home.php");
+require '../model/usuario.php';
 
-    }
+$usuario = new Usuario();
 
-?>
+$usuario -> transaccion($nombre, $identificacion, $telefono, $total);
+
+}
+
+include '../ticket.php';

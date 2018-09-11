@@ -1,0 +1,22 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	background: url("../img/background-login.gif");
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover; 
+}
+
+legend{
+	font-size: 40px;
+}
+
+.login{
+	top: 300px;
+	position: relative;
+	left: 800px;
+}
+
