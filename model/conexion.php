@@ -7,7 +7,7 @@
         # Funcion que permite conectarnos a la base de datos
         public function __construct()
         {
-          parent::__construct('localhost', 'root', 'heider97', 'libreria-app');
+          parent::__construct('localhost', 'id6640076_user', 'library-store', 'id6640076_library_store');
           $this->connect_errno ? die('ERROR: existe un problema al conectarse a la base de datos') : null;
           $this->set_charset("utf8");
         }
