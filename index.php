@@ -59,7 +59,15 @@
           </div>
         </div>
 
-        <div class="login100-more" style="background-image: url('images/ali-logo.png');"></div>
+        <div class="login100-more" 
+          style="
+            background-image: url('images/ali-logo.png'); 
+            background-image: center;
+            background-size: 70% 70%;
+
+          ">
+            
+          </div>
       </div>
       <!-- form close -->
     </div>
