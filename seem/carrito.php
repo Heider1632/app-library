@@ -92,6 +92,10 @@
                     <label for="telefono" align="center">Telefono</label>
                     <input type="num" maxlength="10" class="form-control" id="telefono" placeholder="telefono">
                 </div>
+                <div class="form-group">
+                    <label for="telefono" align="center">Institución</label>
+                    <input type="num" maxlength="10" class="form-control" id="institucion" placeholder="Institución">
+                </div>
         </div>
       </div>
       <?php
@@ -143,7 +147,8 @@
 
           var nombre = $('#nombre').val(); 
           var identificacion = $('#identificacion').val(); 
-          var telefono = $('#telefono').val(); 
+          var telefono = $('#telefono').val();
+          var institucion = $('#institucion').val(); 
           var total = $('#total').val(); 
           var descuento = $('#desc').val();
           var pago_comprador = $('#pago_comprador').val(); 
@@ -160,7 +165,7 @@
           
             $.ajax({
                url: '../controller/compraController.php',
-               data: {nombre: nombre, identificacion: identificacion, telefono: telefono, total: total, descuento: descuento, pago_comprador: pago_comprador, cambio: cambio},
+               data: {nombre: nombre, identificacion: identificacion, telefono: telefono, institucion:institucion, total: total, descuento: descuento, pago_comprador: pago_comprador, cambio: cambio},
                type: 'POST',
                success: function(response){
                    if(response==1){

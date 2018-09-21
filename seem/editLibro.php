@@ -39,7 +39,7 @@ if ($_GET) {
     background: url('../images/logo-02-navbar.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: 90% 90%;
   }
 </style>
 

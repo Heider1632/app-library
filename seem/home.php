@@ -36,7 +36,7 @@
     background: url('../images/logo-02-navbar.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: 90% 90%;
   }
 
   th{
@@ -164,7 +164,7 @@
       height: 120px;
       background: url('../images/logo-02.png');
       background-position: center;
-      background-size: cover;
+      background-size: 90% 90%;
       border-radius: 50%;
       margin-bottom: 20px;
     }

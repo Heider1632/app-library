@@ -34,12 +34,13 @@
     background: url('../images/logo-02-navbar.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: 90% 90%;
   }
 
-  p{
+  .reg-venta{
     font-size: 22px;
     line-height: 40px;
+    height:  auto;
   }
 
   th{
@@ -49,6 +50,13 @@
   td{
     font-size: 15px;
   }
+
+  @media screen and (max-width: 680px) and (min-width: 300px){
+  .reg-venta {
+    font-size: 12px;
+  }
+
+}
 
 </style>
 
@@ -88,9 +96,8 @@
         <div class="col-md-12">
             <?php
             foreach ($registro as $registroVentas): ?>
-            <p class="alert alert-warning" style="height: 70px;">Nombre: <?php echo $registroVentas['nombre']; ?> ||
+            <p class="alert alert-warning reg-venta">Nombre: <?php echo $registroVentas['nombre']; ?> ||
                                           Telefono: <?php echo $registroVentas['telefono']; ?> ||
-                                          Cantidad: <?php echo $registroVentas['cantidad']; ?> ||
                                           Total: <?php echo $registroVentas['total']; ?>  ||
                                           Fecha: <?php echo $registroVentas['fecha']; ?> 
             <a class="btn btn-primary" data-toggle="collapse" href="#<?php echo $registroVentas['id']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample" style="float: right;">

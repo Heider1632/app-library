@@ -122,19 +122,23 @@
 
           if (empty($nombre)) {
 
-            $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("N.N", "'. $identificacion.'", "'.$telefono.'")');
+            $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("N.N", "'. $identificacion.'", "'.$telefono.'", "'.$institucion.'")');
 
           } elseif(empty($identificacion)){
 
-            $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "**********", "'.$telefono.'")');
+            $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "**********", "'.$telefono.'", "'.$institucion.'")');
 
           } elseif(empty($telefono)){
 
-            $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "'.$identificacion.'", "##########")');
+            $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "'.$identificacion.'", "##########", "'.$institucion.'")');
+
+          }elseif(empty($institucion)){
+
+          $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "'. $identificacion.'", "'.$telefono.'", "NO INSTITUCION")');
 
           }else{
 
-          $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "'. $identificacion.'", "'.$telefono.'")');
+          $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "'. $identificacion.'", "'.$telefono.'", "'.$institucion.'")');
 
           }
 
