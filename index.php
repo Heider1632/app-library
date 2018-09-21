@@ -59,7 +59,7 @@
           </div>
         </div>
 
-        <div class="login100-more" style="background-image: url('images/logo-01.png');"></div>
+        <div class="login100-more" style="background-image: url('images/ali-logo.png');"></div>
       </div>
       <!-- form close -->
     </div>
