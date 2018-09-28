@@ -27,10 +27,10 @@
   .logo-navbar{
     width: 200px;
     height: 120px;
-    background: url('../images/logo-02-navbar.png');
+    background: url('../images/logo-ali.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 90% 90%;
+    background-size: 70% 70%;
   }
 
   th{
