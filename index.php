@@ -61,7 +61,7 @@
 
         <div class="login100-more" 
           style="
-            background-image: url('images/ali-logo.png'); 
+            background-image: url('images/logo-ali.svg'); 
             background-image: center;
             background-size: 70% 70%;
 
