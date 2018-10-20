@@ -37,7 +37,7 @@ $db = new Conexion();
             </thead>
             <tbody>
             <?php 
-            $registros = $db->query('SELECT id_cliente, cliente.nombre, libros.nombre, cant, libros.precio, total cliente.telefono, fecha 
+            $registros = $db->query('SELECT id_cliente, cliente.nombre, libros.nombre, cant, libros.precio, total, cliente.telefono, fecha 
                     FROM transaccion 
                     INNER JOIN cliente ON cliente.id = transaccion.id_cliente
                     INNER JOIN libros ON libros.id = transaccion.id_libro');

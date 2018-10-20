@@ -36,10 +36,10 @@ if ($_GET) {
   .logo-navbar{
     width: 200px;
     height: 120px;
-    background: url('../images/logo-02-navbar.png');
+    background: url('../images/logo-ali.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 90% 90%;
+    background-size: 70% 70%;
   }
 </style>
 
@@ -76,30 +76,30 @@ if ($_GET) {
 	</div>
 	<div class="row">
 	<div class="col-md-8">
-	 <form action="../controller/editLibroController.php" method="POST">
+	 <form>
 	 	<?php while($libro = mysqli_fetch_array($registro)){?>
 
-        <input type="hidden" name="id" value="<?php echo $libro['id']; ?>">
+        <input type="hidden" id="id" value="<?php echo $libro['id']; ?>">
         <!--Body-->
         <div class="form-group">
             <label for="">Nombre</label>
-            <input type="text" name="nombre" class="form-control white-text" value="<?php echo $libro['nombre']; ?>">
+            <input type="text" id="nombre" class="form-control white-text" value="<?php echo $libro['nombre']; ?>">
         </div>
         
         <div class="form-group">
             <label for="precio">Precio</label>
-            <input type="num" class="form-control" minlenght="0" maxlenght="200000" name="precio" id="" class="form-control white-text" value="<?php echo $libro['precio']; ?>">
+            <input type="num" class="form-control" id="precio" class="form-control white-text" value="<?php echo $libro['precio']; ?>">
             
         </div>
 
         <div class="form-group">
             <label for="cantidad">Cantidad</label>
-            <input type="num" class="form-control" name="cantidad" id="" class="form-control white-text" value="<?php echo $libro['cantidad']; ?>">
+            <input type="num" class="form-control" id="cantidad" class="form-control white-text" value="<?php echo $libro['cantidad']; ?>">
         </div>
 
         <div class="form-group">
         <label for="categoria">Categoria</label>
-            <select type="text" name="categoria" class="form-control white-text">
+            <select type="text" id="categoria" class="form-control white-text">
                 <option></option>
                 <option value="1">Obra</option>
                 <option value="2">Texto</option>
@@ -109,11 +109,11 @@ if ($_GET) {
 
         <div class="form-group">
             <label>Codigo Barra</label>
-            <input type="num" class="form-control" name="codigobarra" class="form-control white-text" value="<?php echo $libro['codigobarra']; ?>">
+            <input type="num" class="form-control" id="codigobarra" class="form-control white-text" value="<?php echo $libro['codigobarra']; ?>">
         </div>
 
-        <button type="submit" class="btn btn-success btn-block btn-rounded z-depth-1">Hecho</button>
-        <button type="button" id="cancelar" class="btn btn-danger btn-block btn-rounded z-depth-1">Cancelar</button>
+        <button type="button" id="send" class="btn btn-success btn-block btn-rounded z-depth-1">Hecho</button>
+        <a type="button" href="home.php" class="btn btn-danger btn-block btn-rounded z-depth-1">Cancelar</a>
        	</form>
 
        <?php } ?>
@@ -125,7 +125,7 @@ if ($_GET) {
 
             width: 400px;
             height: 500px;
-            background: url('../images/logo-02.png');
+            background: url('../images/logo-ali.png');
             background-size: 100% 100%;
             background-position: right;
             background-repeat: no-repeat;
@@ -138,4 +138,45 @@ if ($_GET) {
   </div>
  </div>
 </body>
+<script src="../js/sweetalert.min.js"></script>
+  <script type="text/javascript">
+$('#send').click(function(){
+
+  var id = $('#id').val();
+  var nombre = $('#nombre').val();
+  var precio = $('#precio').val();
+  var cantidad = $('#cantidad').val();
+  var categoria = $('#categoria').val();
+  var codigobarra = $('#codigobarra').val();
+
+  // Envio de datos mediante Ajax
+  $.ajax({
+    method: 'POST',
+    // Recuerda que la ruta se hace como si estuvieramos en el index y no en operaciones por esa razon no utilizamos ../ para ir a controller
+    url: '../controller/editLibroController.php',
+    // Recuerda el primer parametro es la variable de php y el segundo es el dato que enviamos
+    data: {id:id, nombre: nombre, precio: precio, cantidad: cantidad, codigobarra: codigobarra},
+    // el parametro res es la respuesta que da php mediante impresion de pantalla (echo)
+    success: function(res){
+      // Ahora validamos la respuesta de php, si es error_1 algun campo esta vacio de lo contrario todo salio bien y redireccionaremos a donde diga php
+      if(res == 'error_1'){
+        /*
+        Para usar sweetalert es muy sencillo, has de cuenta que haces un alert
+        solo que esta ves enviaras 3 parametros separados por comas, el primero
+        es el titulo de la alerta, el segundo es la descripcion y el tercero es el tipo de alerta
+        en el momento conozco tres tipos, entonces puedes variar entre success: Muestra animación de un check,
+        warning: muestra icono de advertencia amarillo y error: muestra una animacion con una X muy chula :v
+        */
+        swal('Error', 'ocurrio algo inesperado', 'error');
+      }else if(res == 'error_2'){
+        // Recuerda que si no necesitas validar si es un email puedes eliminar el if de la linea 34
+        swal('Error', 'codigobarra vacio', 'warning');
+      }else if(res == 'error_3'){
+        swal('Exito', 'exito libro modificado', 'success');
+      }
+    }
+  });
+
+});
+  </script>
 </html>

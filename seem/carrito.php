@@ -94,7 +94,15 @@
                 </div>
                 <div class="form-group">
                     <label for="telefono" align="center">Institución</label>
-                    <input type="num" maxlength="10" class="form-control" id="institucion" placeholder="Institución">
+                    <select class="form-control" id="institucion" placeholder="Institución">
+                      <option>La salle</option>
+                      <option>G Recreo</option>
+                      <option>G Campestre</option>
+                      <option>Montessori</option>
+                      <option>Colegio Latino</option>
+                      <option>G Vallegrande</option>
+                      <option>George Noble</option>
+                    </select>
                 </div>
         </div>
       </div>
@@ -112,25 +120,18 @@
               <select id="desc">
                 <option value="0">Null</option>
                 <option value="0.01">1%</option>
+                <option value="0.015">1.5%</option>
                 <option value="0.02">2%</option>
+                <option value="0.025">2.5%</option>
                 <option value="0.03">3%</option>
-                <option value="0.04">4%</option>
-                <option value="0.05">5%</option>
-                <option value="0.06">6%</option>
-                <option value="0.07">7%</option>
-                <option value="0.08">8%</option>
-                <option value="0.09">9%</option>
-                <option value="0.10">10%</option>
-                <option value="0.11">11%</option>
-                <option value="0.12">12%</option>
-                <option value="0.13">13%</option>
-                <option value="0.14">14%</option>
-                <option value="0.15">15%</option>
               </select>
             </div>
             <div class="col-md-2">
               <label>Pago comprador</label>
-              <input type="num" id="pago_comprador" value="" required="">
+              <select id="pago_comprador" value="" required="">
+                <option value="efectivo">Efectivo</option>
+                <option value="electronico">Pago tarjeta</option>
+              </select>
             </div>
             <div class="col-md-3">
           <button class="btn btn-success" type="button" id="success">Confirmar</button>
@@ -153,19 +154,36 @@
           var descuento = $('#desc').val();
           var pago_comprador = $('#pago_comprador').val(); 
 
-          if (descuento !== 0) {
+          if(pago_comprador == 'efectivo'){
 
-            var prize = total * descuento;
+            if (descuento !== 0) {
 
-          }
+              var prize = total * descuento;
 
-          total = total - prize;
+              }
 
-          var cambio = pago_comprador - total;
+              total = total - prize;
+
+            swal({
+              title: 'Ingrese la suma',
+              type: "input",
+              text: 'Total compra con descuento: ' + total,
+              showCancelButton: true,
+              closeOnConfirm: false
+            },
+              function(inputValue) {
+              if (inputValue === false) return false;
+
+              if(inputValue === ""){
+                swal.showInputError("Necesitas colocal un pago");
+                return false
+              }
+
+               var cambio = inputValue - total;
           
-            $.ajax({
+              $.ajax({
                url: '../controller/compraController.php',
-               data: {nombre: nombre, identificacion: identificacion, telefono: telefono, institucion:institucion, total: total, descuento: descuento, pago_comprador: pago_comprador, cambio: cambio},
+               data: {nombre: nombre, identificacion: identificacion, telefono: telefono, institucion: institucion, total: total, descuento: descuento, pago_comprador: pago_comprador, cambio: cambio, inputValue: inputValue},
                type: 'POST',
                success: function(response){
                    if(response==1){
@@ -174,6 +192,8 @@
 
                       setTimeout("location.reload()", 5000);
 
+                   }else if(response==2){
+                      swal('Error', "Pago menor al total", 'error');
                    }else{
                       swal('Error', "Algo salio mal", 'error');
                       console.log(response);
@@ -181,6 +201,13 @@
 
                }
            }); 
+            });
+          }else{
+
+            swal('Advertencia', 'esperando datafono...', 'warning')
+          }
+
+          
         });
 
         $('#failed').click(function(){

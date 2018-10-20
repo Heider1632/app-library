@@ -57,13 +57,13 @@
       // si la consulta es mayor a 0 el libro existe
       if($verificar_libro > 0){
 
-        echo "el libro ya existe";
+        echo "error_3";
 
       }else{
 
         $db->query('INSERT INTO libros(nombre, codigobarra, precio, cantidad, idcategoria) VALUES ("'.$nombre.'", "'.$codigobarra.'", "'.$precio.'", "'.$cantidad.'", "'.$categoria.'")');
 
-        echo "libro insertado";
+        echo "error_2";
         // u.u finalizamos aqui :v
       }
 
@@ -105,7 +105,7 @@
       $db->close();
       }
 
-      public function transaccion($nombre, $identificacion, $telefono, $total){
+      public function transaccion($nombre, $identificacion, $telefono, $institucion, $total){
 
         $db = new Conexion();
 
@@ -122,23 +122,23 @@
 
           if (empty($nombre)) {
 
-            $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("N.N", "'. $identificacion.'", "'.$telefono.'", "'.$institucion.'")');
+            $db->query('INSERT INTO cliente (nombre, identificacion, telefono, instituto) VALUES ("N.N", "'. $identificacion.'", "'.$telefono.'", "'.$institucion.'")');
 
           } elseif(empty($identificacion)){
 
-            $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "**********", "'.$telefono.'", "'.$institucion.'")');
+            $db->query('INSERT INTO cliente (nombre, identificacion, telefono, instituto) VALUES ("'. $nombre.'", "**********", "'.$telefono.'", "'.$institucion.'")');
 
           } elseif(empty($telefono)){
 
-            $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "'.$identificacion.'", "##########", "'.$institucion.'")');
+            $db->query('INSERT INTO cliente (nombre, identificacion, telefono, instituto) VALUES ("'. $nombre.'", "'.$identificacion.'", "##########", "'.$institucion.'")');
 
           }elseif(empty($institucion)){
 
-          $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "'. $identificacion.'", "'.$telefono.'", "NO INSTITUCION")');
+          $db->query('INSERT INTO cliente (nombre, identificacion, telefono, instituto) VALUES ("'. $nombre.'", "'. $identificacion.'", "'.$telefono.'", "NO INSTITUCION")');
 
           }else{
 
-          $db->query('INSERT INTO cliente (nombre, identificacion, telefono) VALUES ("'. $nombre.'", "'. $identificacion.'", "'.$telefono.'", "'.$institucion.'")');
+          $db->query('INSERT INTO cliente (nombre, identificacion, telefono, instituto) VALUES ("'. $nombre.'", "'. $identificacion.'", "'.$telefono.'", "'.$institucion.'")');
 
           }
 
@@ -146,7 +146,7 @@
 
             $hora = date("Y-m-d H:i:s");
 
-            foreach ($_SESSION['carrito'] as $c) {
+            foreach($_SESSION['carrito'] as $c) {
 
             $consulta = $db->query('SELECT id FROM cliente where nombre = "'.$nombre.'"');
 
@@ -167,6 +167,7 @@
 
             #Mando un numero de respuesta para saber que se conecto correctamente.
             echo 1;
+
             }else {
 
             echo 'error desde el usuario';
@@ -214,7 +215,7 @@
             'nombre' => $registro['nombre'],
             'cantidad' => $registro[3],
             'total' => $registro['total'],
-            'telefono' => $registro['telefono'],
+            'telefono' => $registro[2],
             'fecha' => $registro['fecha']
         );
 
@@ -233,7 +234,7 @@
 
       $db->close();
 
-      print "<script>window.location='../controller/verInventario.php';</script>";
+      echo 'error_3';
     }
 
     public function buscarLibroRegistro($buscar){
@@ -255,6 +256,8 @@
             'genero' => $registro['genero']
         );
       }
+
+      echo 'error_3';
 
        return $libro;
 

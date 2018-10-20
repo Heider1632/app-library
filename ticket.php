@@ -18,7 +18,7 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 	desde el panel de control
 */
 
-$nombre_impresora = "xprinter";
+$nombre_impresora = "POS";
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -43,7 +43,7 @@ $printer->setJustification(Printer::JUSTIFY_CENTER);
 	el logo
 */
 try{
-	$logo = EscposImage::load("logo.jpg", false);
+	$logo = EscposImage::load("images/logo-ali.png", false);
     $printer->bitImage($logo);
 }catch(Exception $e){/*No hacemos nada si hay error*/}
 
@@ -51,7 +51,8 @@ try{
 	Ahora vamos a imprimir un encabezado
 */
 
-$printer->text("\n"."Academic Language Institute Store" . "\n");
+$printer->text("\n"."ALI Store" . "\n");
+$printer->text("\n"."NIT: 45471185-8" . "\n");
 $printer->text("Cra 11B N°54-79" . "\n");
 $printer->text("Tel: 795 12 89" . "\n");
 #La fecha también
@@ -68,8 +69,8 @@ $printer->text("-----------------------------"."\n");
 
 	/*Alinear a la izquierda para la cantidad y el nombre*/
 	$printer->setJustification(Printer::JUSTIFY_LEFT);
-    foreach ($_SESSION['carrito'] as $c) {
-    	$printer->text("  ". $c['cantidad'] . "   " . $c['nombre'] . "   " . $c['precio'] . "\n");
+    foreach ($_SESSION['carrito'] as $m){
+    	$printer->text("  ". $m['cantidad'] . "   " . $m['nombre'] . "   " . $m['precio'] . "\n");
     }
 /*
 	Terminamos de imprimir

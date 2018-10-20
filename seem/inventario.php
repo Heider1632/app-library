@@ -119,6 +119,7 @@
 
             $suma = 0;
             $cantidad = 0;
+            $total = 0;
 
             foreach ($registro as $libro){
             ?>
@@ -133,17 +134,16 @@
 
             }
 
-            foreach ($registro as $num => $values) {
+            for ($i=0; $i < count($registro); $i++) { 
 
-                $suma += $values['precio'];
+                $total += $registro[$i]['precio'] * $registro[$i]['cantidad'];
+              
             }
 
-            foreach ($registro as $cant => $values) {
-                
-                $cantidad += $values['cantidad'];
+            foreach ($registro as $cant) {
+              
+              $cantidad += $cant['cantidad'];
             }
-
-              $total = $suma * $cantidad;
 
             ?>
             </tbody>

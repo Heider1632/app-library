@@ -7,7 +7,7 @@
         # Funcion que permite conectarnos a la base de datos
         public function __construct()
         {
-          parent::__construct('sql10.freemysqlhosting.net', 'sql10258384', 'dvtV1YWK6m', 'sql10258384');
+          parent::__construct('localhost', 'root', '', 'app-libreria');
           $this->connect_errno ? die('ERROR: existe un problema al conectarse a la base de datos') : null;
           $this->set_charset("utf8");
         }

@@ -10,10 +10,11 @@ $total = $_POST['total'];
 $descuento = $_POST['descuento'];
 $pago_comprador = $_POST['pago_comprador'];
 $cambio = $_POST['cambio'];
+$inputValue = $_POST['inputValue'];
 
-if ($pago_comprador < $total) {
+if ($inputValue < $total) {
 	
-	echo 'error desde el controlador';
+	echo 2;
 	
 }else{
 
@@ -23,6 +24,7 @@ $usuario = new Usuario();
 
 $usuario -> transaccion($nombre, $identificacion, $telefono, $institucion, $total);
 
+include '../ticket.php';
+
 }
 
-include '../ticket.php';

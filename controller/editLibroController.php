@@ -8,10 +8,14 @@ $precio = $_POST['precio'];
 
 if (empty($id)) {
 	
-	echo 'error';
+	echo 'error_1';
+	
+}else if(empty($codigobarra)){
+
+	echo 'error_2';
 }else{
 
-	require '../model/usuario';
+	require '../model/usuario.php';
 
 	$usuario = new Usuario();
 
