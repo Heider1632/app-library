@@ -49,10 +49,10 @@
 <body id="top">
 <!-- ################################################################################################ -->
 <!-- Top Background Image Wrapper -->
-<div class="bgded overlay" style="background-image:url('../images/01.png');"> 
+<div class="bgded overlay" style="background-image:url('../images/01.png');">
   <!-- ################################################################################################ -->
   <div class="wrapper row1">
-    <header id="header" class="hoc clear"> 
+    <header id="header" class="hoc clear">
       <!-- ################################################################################################ -->
       <div id="logo" class="fl_left">
        <div class="logo-navbar"></div>
@@ -97,6 +97,7 @@
                 <th scope="col">Precio</th>
                 <th scope="col">Cantidad</th>
                 <th scope="col">Categoria</th>
+                <th scope="col">Institución</th>
                 <th scope="col">Editar</th>
               </tr>
             </thead>
@@ -112,6 +113,7 @@
                 <td><?php echo "$" . $l['precio']; ?></td>
                 <td><?php echo $l['cantidad']; ?></td>
                 <td><?php echo $l['genero']; ?></td>
+                <td><?php echo $l['institución']; ?></td>
               </tr>
               <?php
             endforeach;
@@ -128,20 +130,21 @@
                 <td><?php echo "$" . $libro['precio']; ?></td>
                 <td><?php echo $libro['cantidad']; ?></td>
                 <td><?php echo $libro['genero']; ?></td>
+                <td><?php echo $libro['institución']; ?></td>
                 <td><a href="../seem/editLibro.php?id=<?php echo $libro['id']; ?>"><i class="material-icons md-24">edit</i></a></td>
               </tr>
               <?php
 
             }
 
-            for ($i=0; $i < count($registro); $i++) { 
+            for ($i=0; $i < count($registro); $i++) {
 
                 $total += $registro[$i]['precio'] * $registro[$i]['cantidad'];
-              
+
             }
 
             foreach ($registro as $cant) {
-              
+
               $cantidad += $cant['cantidad'];
             }
 
@@ -166,7 +169,7 @@
       </div>
      </footer>
    <?php endif; ?>
-    
+
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
