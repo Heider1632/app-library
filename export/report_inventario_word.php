@@ -31,6 +31,7 @@ $registro = $usuario->verInventario();
                 <th scope="col">Precio</th>
                 <th scope="col">Cantidad</th>
                 <th scope="col">Categoria</th>
+                 <th scope="col">Institucion</th>
               </tr>
             </thead>
             <tbody>
@@ -46,6 +47,7 @@ $registro = $usuario->verInventario();
                 <td scope="col"><?php echo $libro['precio']; ?></td>
                 <td scope="col"><?php echo $libro['cantidad']; ?></td>
                 <td scope="col"><?php echo $libro['genero']; ?></td>
+                <td scope="col"><?php echo $libro['ins']; ?></td>
               </tr>
               <?php
 

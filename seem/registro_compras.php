@@ -63,7 +63,7 @@
 <body id="top">
 <!-- ################################################################################################ -->
 <!-- Top Background Image Wrapper -->
-<div class="bgded overlay" style="background-image:url('../images/01.png');"> 
+<div class="bgded overlay" style="background: #2E86C1;"> 
   <!-- ################################################################################################ -->
   <div class="wrapper row1">
     <header id="header" class="hoc clear"> 

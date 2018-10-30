@@ -182,16 +182,19 @@
        # Nos conectamos a la base de datos
         $db = new Conexion();
 
-       $sql = $db->query("SELECT libros.id, nombre, precio, cantidad, categorias.genero FROM libros INNER JOIN categorias ON libros.idcategoria = categorias.id GROUP by libros.nombre");
+       $sql = $db->query("SELECT libros.id, libros.nombre, precio, cantidad, categorias.genero, institucion.nombre FROM libros
+                            INNER JOIN institucion ON libros.idinstitucion = institucion.id 
+                            INNER JOIN categorias ON libros.idcategoria = categorias.id GROUP by libros.nombre");
         while($registro = $db->consultaArreglo($sql)){
 
         $libro[] = array(
 
             'id' => $registro['id'],
-            'nombre' => $registro['nombre'],
+            'nombre' => $registro[1],
             'precio' => $registro['precio'],
             'cantidad' => $registro['cantidad'],
-            'genero' => $registro['genero']
+            'genero' => $registro['genero'],
+            'ins' => $registro[5],
         );
       }
 
@@ -212,7 +215,7 @@
         $transaccion[] = array(
 
             'id' => $registro['id'],
-            'nombre' => $registro['nombre'],
+            'nombre' => $registro[1],
             'cantidad' => $registro[3],
             'total' => $registro['total'],
             'telefono' => $registro[2],
@@ -241,10 +244,12 @@
 
       $db = new Conexion();
 
-      $sql = $db->query('SELECT libros.id, nombre, precio, cantidad, categorias.genero 
-                          FROM libros 
+      $sql = $db->query('SELECT libros.id, libros.nombre, precio, cantidad, categorias.genero, institucion.nombre 
+                          FROM libros
+                          INNER JOIN institucion ON libros.idinstitucion = institucion.id 
                           INNER JOIN categorias ON libros.idcategoria = categorias.id 
                           WHERE codigobarra = "'.$buscar.'" or nombre = "'.$buscar.'"');
+
         while($registro = $db->consultaArreglo($sql)){
 
         $libro[] = array(
@@ -253,7 +258,8 @@
             'nombre' => $registro['nombre'],
             'precio' => $registro['precio'],
             'cantidad' => $registro['cantidad'],
-            'genero' => $registro['genero']
+            'genero' => $registro['genero'],
+            'ins' => $registro[5],
         );
       }
 

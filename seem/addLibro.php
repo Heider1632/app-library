@@ -31,7 +31,7 @@
 <body id="top">
 <!-- ################################################################################################ -->
 <!-- Top Background Image Wrapper -->
-<div class="bgded overlay" style="background-image:url('../images/01.png');">
+<div class="bgded overlay" style="background: #2E86C1;">
   <!-- ################################################################################################ -->
   <div class="wrapper row1">
     <header id="header" class="hoc clear">
@@ -93,7 +93,7 @@
             <input type="num" class="form-control" id="codigobarra" class="form-control white-text">
         </div>
 
-        <button type="button" id="sends" class="btn btn-success btn-block btn-rounded z-depth-1">Hecho</button>
+        <button type="button" id="send" class="btn btn-success btn-block btn-rounded z-depth-1">Hecho</button>
        	</form>
 
       </div>
@@ -132,15 +132,18 @@
           // Recuerda que la ruta se hace como si estuvieramos en el index y no en operaciones por esa razon no utilizamos ../ para ir a controller
           url: '../controller/libroController.php',
           // Recuerda el primer parametro es la variable de php y el segundo es el dato que enviamos
-          data: {nombre: nombre, precio: precio, cantidad: cantidad, codigobarra: codigobarra},
+          data: {nombre: nombre, precio: precio, cantidad: cantidad, categoria: categoria, codigobarra: codigobarra},
           // el parametro res es la respuesta que da php mediante impresion de pantalla (echo)
           success: function(res){
             // Ahora validamos la respuesta de php, si es error_1 algun campo esta vacio de lo contrario todo salio bien y redireccionaremos a donde diga php
             if(res == 'error_1'){
+
               swal('Error', 'ocurrio algo inesperado', 'error');
             }else if(res == 'error_2'){
+
               swal('Exito', 'exito libro añadido', 'success');
-            }else(res == 'error_3'){
+            }else if(res == 'error_3'){
+
               swal('error', 'libro repetido', 'error');
             }
           }

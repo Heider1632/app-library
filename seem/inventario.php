@@ -49,7 +49,7 @@
 <body id="top">
 <!-- ################################################################################################ -->
 <!-- Top Background Image Wrapper -->
-<div class="bgded overlay" style="background-image:url('../images/01.png');">
+<div class="bgded overlay" style="background: #2E86C1;">
   <!-- ################################################################################################ -->
   <div class="wrapper row1">
     <header id="header" class="hoc clear">
@@ -113,7 +113,7 @@
                 <td><?php echo "$" . $l['precio']; ?></td>
                 <td><?php echo $l['cantidad']; ?></td>
                 <td><?php echo $l['genero']; ?></td>
-                <td><?php echo $l['institución']; ?></td>
+                <td><?php echo $l['ins']; ?></td>
               </tr>
               <?php
             endforeach;
@@ -130,7 +130,7 @@
                 <td><?php echo "$" . $libro['precio']; ?></td>
                 <td><?php echo $libro['cantidad']; ?></td>
                 <td><?php echo $libro['genero']; ?></td>
-                <td><?php echo $libro['institución']; ?></td>
+                <td><?php echo $libro['ins']; ?></td>
                 <td><a href="../seem/editLibro.php?id=<?php echo $libro['id']; ?>"><i class="material-icons md-24">edit</i></a></td>
               </tr>
               <?php
