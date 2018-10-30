@@ -248,14 +248,14 @@
                           FROM libros
                           INNER JOIN institucion ON libros.idinstitucion = institucion.id 
                           INNER JOIN categorias ON libros.idcategoria = categorias.id 
-                          WHERE codigobarra = "'.$buscar.'" or nombre = "'.$buscar.'"');
+                          WHERE codigobarra = "'.$buscar.'" or libros.nombre = "'.$buscar.'"');
 
         while($registro = $db->consultaArreglo($sql)){
 
         $libro[] = array(
 
             'id' => $registro['id'],
-            'nombre' => $registro['nombre'],
+            'nombre' => $registro[1],
             'precio' => $registro['precio'],
             'cantidad' => $registro['cantidad'],
             'genero' => $registro['genero'],
@@ -263,9 +263,7 @@
         );
       }
 
-      echo 'error_3';
-
-       return $libro;
+      return $libro;
 
       $db->close();
     }
