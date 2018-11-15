@@ -37,11 +37,12 @@ $db = new Conexion();
             </thead>
             <tbody>
             <?php 
-            $registros = $db->query('SELECT id_cliente, cliente.nombre, libros.nombre, cant, libros.precio, total, cliente.telefono, fecha 
+            $registros = $db->query('SELECT cliente.nombre, libros.nombre, cant, libros.precio, total, cliente.telefono, fecha 
                     FROM transaccion 
                     INNER JOIN cliente ON cliente.id = transaccion.id_cliente
                     INNER JOIN libros ON libros.id = transaccion.id_libro');
-            while ($r = mysqli_fetch_array($registros)) { ?>
+
+            while($r = $db->consultaArreglo($registros)) { ?>
               <tr>
                 <td><?php echo $r['nombre']; ?></td>
                 <td><?php echo $r[1]; ?></td>
@@ -56,6 +57,7 @@ $db = new Conexion();
          </table>
          </div>
   </div>
+</div>
   </body>
   </html>
   <?php

@@ -20,7 +20,7 @@ $db = new Conexion();
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 </head>
 <body>
-<div class="container-fluid">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
         <table class="table">
@@ -37,11 +37,12 @@ $db = new Conexion();
             </thead>
             <tbody>
             <?php 
-            $registros = $db->query('SELECT id_cliente, cliente.nombre, libros.nombre, cant, libros.precio, total cliente.telefono, fecha 
+            $registrosW = $db->query('SELECT cliente.nombre, libros.nombre, cant, libros.precio, total, cliente.telefono, fecha 
                     FROM transaccion 
                     INNER JOIN cliente ON cliente.id = transaccion.id_cliente
                     INNER JOIN libros ON libros.id = transaccion.id_libro');
-            while ($r = mysqli_fetch_array($registros)) { ?>
+
+            while ($r = $db->consultaArreglo($registrosW)) { ?>
               <tr>
                 <td><?php echo $r['nombre']; ?></td>
                 <td><?php echo $r[1]; ?></td>
@@ -55,7 +56,8 @@ $db = new Conexion();
             </tbody>
          </table>
          </div>
-	</div>
+	 </div>
+  </div>
   </body>
   </html>
   <?php
