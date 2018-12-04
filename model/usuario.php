@@ -46,7 +46,7 @@
       $db->close();
     }
 
-    public function RegistrarLibro($nombre, $codigobarra, $precio, $cantidad, $categoria)
+    public function RegistrarLibro($nombre, $codigobarra, $precio, $cantidad, $categoria, $institucion)
     {
       $db = new Conexion();
 
@@ -61,7 +61,7 @@
 
       }else{
 
-        $db->query('INSERT INTO libros(nombre, codigobarra, precio, cantidad, idcategoria) VALUES ("'.$nombre.'", "'.$codigobarra.'", "'.$precio.'", "'.$cantidad.'", "'.$categoria.'")');
+        $db->query('INSERT INTO libros(nombre, codigobarra, precio, cantidad, idcategoria, idinstitucion) VALUES ("'.$nombre.'", "'.$codigobarra.'", "'.$precio.'", "'.$cantidad.'", "'.$categoria.'", "'.$institucion.'")');
 
         echo "error_2";
         // u.u finalizamos aqui :v
@@ -264,6 +264,25 @@
       }
 
       return $libro;
+
+      $db->close();
+    }
+
+    public function VerInstitucion(){
+       $db = new Conexion();
+
+      $sql = $db->query('SELECT institucion.id,  institucion.nombre FROM institucion');
+
+        while($f = $db->consultaArreglo($sql)){
+
+        $institucion[] = array(
+
+            'id' => $f['id'],
+            'nombre' => $f['nombre']
+        );
+      }
+
+      return $institucion;
 
       $db->close();
     }

@@ -1,5 +1,7 @@
 <?php
+  require('../model/usuario.php');
 
+  $usuario = new Usuario();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -89,6 +91,16 @@
         </div>
 
         <div class="form-group">
+        <label for="categoria">Institucion</label>
+        <?php $institucion = ($usuario->verInstitucion()); ?>
+            <select type="text" id="institucion" class="form-control white-text">
+               <?php foreach($institucion as $i): ?>
+                <option value="<?php echo $i['id']; ?>"><?php echo $i['nombre']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="form-group">
             <label>Codigo Barra</label>
             <input type="num" class="form-control" id="codigobarra" class="form-control white-text">
         </div>
@@ -124,6 +136,7 @@
         var precio = $('#precio').val();
         var cantidad = $('#cantidad').val();
         var categoria = $('#categoria').val();
+        var institucion = $('#institucion').val();
         var codigobarra = $('#codigobarra').val();
 
         // Envio de datos mediante Ajax
@@ -132,7 +145,7 @@
           // Recuerda que la ruta se hace como si estuvieramos en el index y no en operaciones por esa razon no utilizamos ../ para ir a controller
           url: '../controller/libroController.php',
           // Recuerda el primer parametro es la variable de php y el segundo es el dato que enviamos
-          data: {nombre: nombre, precio: precio, cantidad: cantidad, categoria: categoria, codigobarra: codigobarra},
+          data: {nombre: nombre, precio: precio, cantidad: cantidad, categoria: categoria, institucion: institucion, codigobarra: codigobarra},
           // el parametro res es la respuesta que da php mediante impresion de pantalla (echo)
           success: function(res){
             // Ahora validamos la respuesta de php, si es error_1 algun campo esta vacio de lo contrario todo salio bien y redireccionaremos a donde diga php

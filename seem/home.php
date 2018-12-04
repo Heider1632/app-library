@@ -22,7 +22,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>ALI - Store</title>
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="../css/sweetalert.css">
+  <link rel="stylesheet" type="text/css" href="../css/sweetalert2.min.css">
   <link rel="stylesheet" href="../css/footer.css">
   <link href="../css/layout.css" rel="stylesheet" type="text/css" media="all">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -210,5 +210,5 @@
 <script src="../layout/scripts/jquery.mobilemenu.js"></script>
 <script src="../layout/scripts/jquery.flexslider-min.js"></script>
  <!-- SweetAlert js -->
-<script src="../js/sweetalert.min.js"></script>
+<script src="../js/sweetalert2.min.js"></script>
 </html>

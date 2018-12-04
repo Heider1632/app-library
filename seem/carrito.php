@@ -156,6 +156,8 @@
 
           if(pago_comprador == 'efectivo'){
 
+            var metodo = 'efectivo';
+
             if (descuento !== 0) {
 
               var prize = total * descuento;
@@ -183,7 +185,7 @@
           
               $.ajax({
                url: '../controller/compraController.php',
-               data: {nombre: nombre, identificacion: identificacion, telefono: telefono, institucion: institucion, total: total, descuento: descuento, pago_comprador: pago_comprador, cambio: cambio, inputValue: inputValue},
+               data: {nombre: nombre, identificacion: identificacion, telefono: telefono, institucion: institucion, metodo:metodo, total: total, descuento: descuento, pago_comprador: pago_comprador, cambio: cambio},
                type: 'POST',
                success: function(response){
                    if(response==1){
@@ -200,11 +202,61 @@
                    }
 
                }
-           }); 
+              }); 
             });
           }else{
 
-            swal('Advertencia', 'esperando datafono...', 'warning')
+            var nombre = $('#nombre').val(); 
+            var identificacion = $('#identificacion').val(); 
+            var telefono = $('#telefono').val();
+            var institucion = $('#institucion').val(); 
+            var total = $('#total').val(); 
+            var descuento = $('#desc').val();
+            var pago_comprador = $('#pago_comprador').val(); 
+
+            if (descuento !== 0) {
+
+              var prize = total * descuento;
+
+              }
+
+              total = total - prize;
+
+              var metodo = 'tarjeta';
+
+              swal({
+                title: 'Esperando datafono',
+                type: "warning",
+                text: 'Total compra con descuento: ' + total,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                showCancelButton: true
+              }).then (function(){
+
+              var cambio = '0';
+
+               $.ajax({
+               url: '../controller/compraController.php',
+               data: {nombre: nombre, identificacion: identificacion, telefono: telefono, institucion: institucion, metodo: metodo, total: total, descuento: descuento, pago_comprador: pago_comprador, cambio: cambio},
+               type: 'POST',
+               success: function(response){
+                   if(response==1){
+
+                      swal('Exito', "Tu cambio es: $" + cambio, 'success');
+
+                      setTimeout("location.reload()", 5000);
+
+                   }else if(response==2){
+                      swal('Error', "Pago menor al total", 'error');
+                   }else{
+                      swal('Error', "Algo salio mal", 'error');
+                      console.log(response);
+                   }
+                  }
+                }); 
+
+              });
+
           }
 
           
