@@ -105,7 +105,7 @@
       $db->close();
       }
 
-      public function transaccion($nombre, $identificacion, $telefono, $institucion, $total){
+      public function transaccion($nombre, $identificacion, $telefono, $institucion, $metodo, $total){
 
         $db = new Conexion();
 
@@ -152,7 +152,7 @@
 
             $id = $db->consultaArreglo($consulta);
 
-            $db->query('INSERT INTO transaccion (id_cliente, id_libro, cant, total, fecha) VALUES ("'.$id['id'].'", "'.$c['libro_id'].'", "'.$c['cantidad'].'", "'.$total.'", "'. $hora .'")');
+            $db->query('INSERT INTO transaccion (id_cliente, id_libro, cant, total, metodo, fecha) VALUES ("'.$id['id'].'", "'.$c['libro_id'].'", "'.$c['cantidad'].'", "'.$total.'", "'.$metodo.'", "'. $hora .'")');
 
             $sql = $db->query('SELECT id FROM transaccion WHERE id_cliente = "'.$id['id'].'" and id_libro =  "'.$c['libro_id'].'" and fecha="'.$hora.'"');
 
@@ -184,7 +184,7 @@
 
        $sql = $db->query("SELECT libros.id, libros.nombre, precio, cantidad, categorias.genero, institucion.nombre FROM libros
                             INNER JOIN institucion ON libros.idinstitucion = institucion.id 
-                            INNER JOIN categorias ON libros.idcategoria = categorias.id GROUP by libros.nombre");
+                            INNER JOIN categorias ON libros.idcategoria = categorias.id");
         while($registro = $db->consultaArreglo($sql)){
 
         $libro[] = array(

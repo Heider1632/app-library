@@ -17,6 +17,8 @@ $usuario = new Usuario();
 
 if($metodo == 'efectivo'){
 
+	$inputValue = $_POST['inputValue'];
+
 	if ($inputValue < $total) {
 	
 		echo 2;

@@ -66,7 +66,7 @@
               <li><a href="../export/report_inventario_excel.php">Excel</a></li>
             </ul>
           </li>
-          <li><a href="../controller/verInventario.php">Inventario</a></li>
+          <li><a href="../controller/listarController.php">Listar Inventario</a></li>
           <li><a href="../controller/verRegCompra.php">Registro de Compras</a></li>
           <li><a href="../seem/addLibro.php">Añadir Libro</a></li>
           <li><a href="../controller/cerrarSesion.php">Salir</a></li>

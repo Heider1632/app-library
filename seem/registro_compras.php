@@ -112,11 +112,12 @@
                       <th>Nombre Libro</th>
                       <th>Cantidad</th>
                       <th>Precio</th>
+                      <th>Metodo</th>th>
                     </tr>
                   </thead>
                   <tbody>
                    <?php
-                   $consulta = $db->query('SELECT libros.nombre, cant, libros.precio FROM transaccion INNER JOIN libros ON libros.id = transaccion.id_libro WHERE id_cliente ="'.$registroVentas['id'].'"');
+                   $consulta = $db->query('SELECT libros.nombre, cant, metodo, libros.precio FROM transaccion INNER JOIN libros ON libros.id = transaccion.id_libro WHERE id_cliente ="'.$registroVentas['id'].'"');
                    while ($fila = $db->consultaArreglo($consulta)) {
                     ?>
 
@@ -124,6 +125,7 @@
                         <td><?php echo $fila['nombre']; ?></td>
                         <td><?php echo $fila['cant']; ?></td>
                         <td><?php echo $fila['precio']; ?></td>
+                        <td><?php echo $fila['metodo']; ?></td>
                     </tr>
                     <?php
                    }

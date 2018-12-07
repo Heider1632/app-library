@@ -32,15 +32,15 @@ $db = new Conexion();
                 <th scope="col">Precio Libro</th>
                 <th scope="col">Total Compra</th>
                 <th scope="col">Telefono</th>
+                <th scope="col">Metodo</th>
                 <th scope="col">Fecha</th>
               </tr>
             </thead>
             <tbody>
             <?php 
-            $registrosW = $db->query('SELECT cliente.nombre, libros.nombre, cant, libros.precio, total, cliente.telefono, fecha 
-                    FROM transaccion 
-                    INNER JOIN cliente ON cliente.id = transaccion.id_cliente
-                    INNER JOIN libros ON libros.id = transaccion.id_libro');
+            $registrosW = $db->query('SELECT cliente.nombre, libros.nombre, cant, libros.precio, total, cliente.telefono, fecha, metodo FROM transaccion 
+                     INNER JOIN cliente ON cliente.id = transaccion.id_cliente
+                     INNER JOIN libros ON libros.id = transaccion.id_libro');
 
             while ($r = $db->consultaArreglo($registrosW)) { ?>
               <tr>
@@ -50,6 +50,7 @@ $db = new Conexion();
                 <td><?php echo $r['precio']; ?></td>
                 <td><?php echo $r['total']; ?></td>
                 <td><?php echo $r['telefono']; ?></td>
+                <td><?php echo $r['metodo']; ?></td>
                 <td><?php echo $r['fecha']; ?></td>
               </tr>
             <?php } ?>

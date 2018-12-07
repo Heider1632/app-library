@@ -168,24 +168,24 @@
 
             swal({
               title: 'Ingrese la suma',
-              type: "input",
+              type: "info",
+              input: 'text',
               text: 'Total compra con descuento: ' + total,
-              showCancelButton: true,
-              closeOnConfirm: false
-            },
-              function(inputValue) {
+              showCancelButton: true
+            }).then(function(result) {
+              var inputValue = result.value;
               if (inputValue === false) return false;
 
               if(inputValue === ""){
                 swal.showInputError("Necesitas colocal un pago");
                 return false
-              }
+                }
 
-               var cambio = inputValue - total;
+               const cambio = inputValue - total;
           
               $.ajax({
                url: '../controller/compraController.php',
-               data: {nombre: nombre, identificacion: identificacion, telefono: telefono, institucion: institucion, metodo:metodo, total: total, descuento: descuento, pago_comprador: pago_comprador, cambio: cambio},
+               data: {nombre: nombre, identificacion: identificacion, telefono: telefono, institucion: institucion, metodo:metodo, total: total, descuento: descuento, pago_comprador: pago_comprador, cambio: cambio, inputValue: inputValue},
                type: 'POST',
                success: function(response){
                    if(response==1){
